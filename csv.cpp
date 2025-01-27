@@ -14,8 +14,6 @@ struct Student {
     string major;
     double gpa;
 };
-
-// Function to read student data from a CSV file
 vector<Student> readCSV(const string& filename) {
     vector<Student> students;
     ifstream file(filename);
@@ -26,7 +24,7 @@ vector<Student> readCSV(const string& filename) {
     }
 
     string line;
-    getline(file, line); // Skip the header
+    getline(file, line); 
 
     while (getline(file, line)) {
         stringstream ss(line);
@@ -52,8 +50,6 @@ vector<Student> readCSV(const string& filename) {
     file.close();
     return students;
 }
-
-// Function to display student details
 void displayStudents(const vector<Student>& students) {
     cout << "Total Students: " << students.size() << "\n";
     for (const auto& student : students) {
@@ -61,8 +57,6 @@ void displayStudents(const vector<Student>& students) {
              << ", " << student.major << ", " << fixed << setprecision(2) << student.gpa << "\n";
     }
 }
-
-// Function to filter students based on GPA > 3.0
 vector<Student> filterStudentsByGPA(const vector<Student>& students) {
     vector<Student> filtered;
     for (const auto& student : students) {
@@ -72,8 +66,6 @@ vector<Student> filterStudentsByGPA(const vector<Student>& students) {
     }
     return filtered;
 }
-
-// Function to calculate the average age
 double calculateAverageAge(const vector<Student>& students) {
     if (students.empty()) return 0.0;
 
@@ -83,8 +75,6 @@ double calculateAverageAge(const vector<Student>& students) {
     }
     return static_cast<double>(totalAge) / students.size();
 }
-
-// Function to write filtered students to a new CSV file
 void writeCSV(const string& filename, const vector<Student>& students) {
     ofstream file(filename);
 
@@ -105,30 +95,18 @@ void writeCSV(const string& filename, const vector<Student>& students) {
 int main() {
     const string inputFilename = "students.csv";
     const string outputFilename = "filtered_students.csv";
-
-    // Read data from CSV
     vector<Student> students = readCSV(inputFilename);
 
     if (students.empty()) {
         cerr << "No data found in the file or unable to read the file." << endl;
         return 1;
     }
-
-    // Display all students
     displayStudents(students);
-
-    // Filter students based on GPA > 3.0
     vector<Student> filteredStudents = filterStudentsByGPA(students);
-
-    // Display filtered students
     cout << "\nFiltered Students (GPA > 3.0):\n";
     displayStudents(filteredStudents);
-
-    // Calculate and display average age
     double averageAge = calculateAverageAge(students);
     cout << "\nAverage Age: " << fixed << setprecision(2) << averageAge << "\n";
-
-    // Write filtered students to a new CSV file
     writeCSV(outputFilename, filteredStudents);
     cout << "\nFiltered students written to " << outputFilename << "\n";
 
